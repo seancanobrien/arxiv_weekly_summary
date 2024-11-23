@@ -27,7 +27,7 @@ def make_weekly_updates_in_range(start_date, end_date, filter_loc, save_dir):
         make_prev_weekly_update(day, filter_loc, save_dir)
 
 if __name__ == "__main__":
-    filter_file_location = "/home/sean/Documents/arxiv_summary/src/filter.txt"
+    filter_file_location = "/home/sean/Documents/arxiv_weekly_summary/filter.txt"
     save_dir = "/home/sean/Documents/arxiv_weekly_updates/"
 
     make_weekly_updates_in_range(

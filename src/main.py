@@ -30,10 +30,10 @@ if __name__ == "__main__":
     filter_file_location = "/home/sean/.local/arxiv_weekly_summary/filter.txt"
     save_dir = "/home/sean/Documents/arxiv_weekly_updates/"
 
-    make_weekly_updates_in_range(
-        datetime.datetime(2024, 9, 2),
-        datetime.datetime(2024, 11, 18),
-        filter_file_location,
-        save_dir)
+    # make_weekly_updates_in_range(
+    #     datetime.datetime(2024, 9, 2),
+    #     datetime.datetime(2024, 11, 18),
+    #     filter_file_location,
+    #     save_dir)
 
-    # make_prev_weekly_update(datetime.date.today(), filter_file_location, save_dir)
+    make_prev_weekly_update(datetime.date.today(), filter_file_location, save_dir)

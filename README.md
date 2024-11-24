@@ -2,7 +2,18 @@
 This creates a weekly summary of filtered content on the arxiv using the excellent [arxiv api](https://info.arxiv.org/help/api/index.html) and [this Python wrapper](https://github.com/titipata/arxivpy).
 The summary is in the form of a markdown document compiled to html.
 
-## Recommended Usage
+## Usage
+As input, the script takes:
+- A start date in `yyyy-mm-dd` format, or `t` for today.
+- An end date in `yyyy-mm-dd` format, or `t` for today.
+- A filter file location.
+- A directory location in which to save the summary.
+
+### Example
+`python3 main.py t t location/of/filter.txt my/arxiv/summaries/`
+
+## Virtual Environments
+This script requires packages. I don't want to learn how to package these requirements in a distributable way. Instead, here are instructions for how to install these packages, which requires the use a virtual enviromnent these days.
 1) Downlaod this repository.
 2) Create a Python virtual environment in this directory and install the dependencies.
   - `cd location/of/this/repository/`
@@ -10,11 +21,9 @@ The summary is in the form of a markdown document compiled to html.
   - `source env/bin/activate`
   - `pip install -r requirements.txt`
   - `deactivate`
-3) Edit the filter file using the format described below.
-5) Edit the location of the filter file by editing `filter_file_location` in `main.py`.
-4) Edit where you want the weekly summaries to be stored by editing `save_dir` in `main.py`.
+3) Edit the filter file to your requirements. Format described below.
 5) Using your virtual environment, run `main.py`.
-  - `location/of/this/repository/env/bin/python3 location/of/this/repository/src/main.py`
+  - `location/of/this/repository/env/bin/python3 main.py t t filter.txt my/summaries/`
 
 ## Filter file format
 The filter file has a simple format described below.
@@ -33,7 +42,7 @@ Rose Morris_Wright
 KEYWORDS:
 artin
 coxter
-braid group
+braid
 maths is cool
 ```
 The filtering works as follows:
@@ -52,8 +61,8 @@ The filtering works as follows:
 
 ### Search Criteria
  - **Subject categories**: math.gr, math.at, math.gt
- - **Match authors**: Jon McCammond, Giovanni Paolini, Mario Salvetti, Sirio Resteghini, Celeste Damiani, Maria Cumplido, Alexandre Martin, Emanuele Delucchi, Anthony Licata, Luis Paris, Ruth Charney, Masahiko Yoshinaga, Rose Morris_Wright, Karen Vogtmann
-- **Match abstract**: artin, raag, coxter, braid, hurwitz
+ - **Match authors**: Jon McCammond, Ruth Charney
+ - **Match abstract**: artin, coxeter, braid, maths is cool
 
 
 

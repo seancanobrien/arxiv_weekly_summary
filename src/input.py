@@ -36,34 +36,35 @@ def get_filter_vals(filename):
     return authors, keywords, repositories
 
 def get_previous_week_dates(date):
-
-    today = date
-
     # Calculate the difference between today and the most recent Monday
-    days_since_monday = today.weekday()
-
+    days_since_monday = date.weekday()
     # Monday of the current week
-    monday_this_week = today - datetime.timedelta(days=days_since_monday)
-
+    monday_this_week = date - datetime.timedelta(days=days_since_monday)
     # Monday of the previous week
     monday_previous_week = monday_this_week - datetime.timedelta(weeks=1)
-
     # Sunday of the previous week (6 days after the previous Monday
     sunday_previous_week = monday_previous_week + datetime.timedelta(days=6)
 
     return monday_previous_week, sunday_previous_week
 
-def get_mondays_in_range(start_date, end_date):
+def mondays_starting_week_in_range(start_date, end_date):
+    """
+    Returns a list of Mondays that start a week within the given date range.
+
+    Parameters:
+        start_date (datetime): The starting date of the range.
+        end_date (datetime): The ending date of the range.
+
+    Returns:
+        list[datetime]: A list of Mondays marking the start of a week in the range.
+    """
+    # Normalize start_date to the previous Monday if it's not already a Monday
+    start_date += datetime.timedelta(days=-start_date.weekday())
+
+    # Generate Mondays within the range
     mondays = []
-
-    # Adjust start_date to the first Monday after or on the start_date
-    days_to_monday = (7 - start_date.weekday()) % 7
-    first_monday = start_date + datetime.timedelta(days=days_to_monday)
-
-    # Loop through dates from first_monday to end_date, with a step of 7 days
-    current_monday = first_monday
-    while current_monday <= end_date:
-        mondays.append(current_monday)
-        current_monday += datetime.timedelta(weeks=1)
+    while start_date <= end_date:
+        mondays.append(start_date)
+        start_date += datetime.timedelta(weeks=1)
 
     return mondays

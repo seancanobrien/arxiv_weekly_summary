@@ -9,8 +9,18 @@ As input, the script takes:
 - A filter file location.
 - A directory location in which to save the summary.
 
+The script then:
+ - Finds every week (set of 7 concurrent days starting on a Monday and ending on a Sunday) that intersects $[\text{start date}, \text{end date}]$. Denote this set of weeks $S$.
+ - Produces a summary for every week preceeding a week in $S$.
+In partiular, to produce a summary for last week, input `t` for the start and end date.
+
 ### Example
+
 `python3 main.py t t location/of/filter.txt my/arxiv/summaries/`
+
+`python3 main.py 2024-11-11 2024-11-20 location/of/filter.txt my/arxiv/summaries/`
+
+The second example will produce two summaries. One for the week beginning Monday the 4th of November, and one for the week beginning Monday the 11th of November.
 
 ## Virtual Environments
 This script requires packages. I don't want to learn how to package these requirements in a distributable way. Instead, here are instructions for how to install these packages, which requires the use a virtual enviromnent these days.
@@ -21,9 +31,8 @@ This script requires packages. I don't want to learn how to package these requir
   - `source env/bin/activate`
   - `pip install -r requirements.txt`
   - `deactivate`
-3) Edit the filter file to your requirements. Format described below.
-5) Using your virtual environment, run `main.py`.
-  - `location/of/this/repository/env/bin/python3 main.py t t filter.txt my/summaries/`
+3) Using your virtual environment, run `main.py`.
+  - `location/of/this/repository/env/bin/python3 main.py t t filter.txt my/arxiv/summaries/`
 
 ## Filter file format
 The filter file has a simple format described below.
@@ -53,7 +62,7 @@ The filtering works as follows:
 - Capitalisation and diacritics are ignored (as far as I can tell).
 
 # Example output
-
+The output will not render tex as it does in github markdown.
 ---
 
 # Arχiv Weekly Update
@@ -61,7 +70,7 @@ The filtering works as follows:
 
 ### Search Criteria
  - **Subject categories**: math.gr, math.at, math.gt
- - **Match authors**: Jon McCammond, Ruth Charney
+ - **Match authors**: Jon McCammond, Ruth Charney, Rose Morris_Wright
  - **Match abstract**: artin, coxeter, braid, maths is cool
 
 

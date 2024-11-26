@@ -50,14 +50,14 @@ def save_as_update_html(results, start_date, end_date, authors=None, keywords=No
 
     # message if no results were found
     if not(results):
-        md_content += "\n---\n No results matched matched your filter in this date range."
+        md_content += "\n\n---\n\n No results matched matched your filter in this date range."
 
-    md_content += "---\n\n Thank you to arXiv for use of its open access interoperability.\n\n Link to its [API](https://info.arxiv.org/help/api/index.html), which this makes use of."
+    md_content += "\n\n---\n\n Thank you to arXiv for use of its open access interoperability.\n\n Link to its [API](https://info.arxiv.org/help/api/index.html), which this makes use of."
     # Convert Markdown to HTML
     html_content = markdown.markdown(md_content, extensions=['extra'])
     
     # Save to an HTML file
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(html_content)
-    
+
     print(output_file)

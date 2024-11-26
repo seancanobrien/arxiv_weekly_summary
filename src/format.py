@@ -50,9 +50,9 @@ def save_as_update_html(results, start_date, end_date, authors=None, keywords=No
     md_content += "---\n\n Thank you to arXiv for use of its open access interoperability.\n\n Link to its [API](https://info.arxiv.org/help/api/index.html), which this makes use of."
     # Convert Markdown to HTML
     html_content = markdown.markdown(md_content, extensions=['extra'])
-
+    
     # Save to an HTML file
-    with open(html_content, "w", encoding="utf-8") as f:
-        f.write(full_html)
-
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write(html_content)
+    
     print(output_file)

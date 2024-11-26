@@ -62,6 +62,7 @@ The filtering works as follows:
 - Capitalisation and diacritics are ignored (as far as I can tell).
 
 # Example output
+
 The output will not render tex as it does in github markdown.
 ---
 

@@ -17,6 +17,7 @@ def save_as_update_html(results, start_date, end_date, authors=None, keywords=No
     md_content += "\n - **Match authors**: " + ", ".join(authors)
     md_content += "\n - **Match abstract**: " + ", ".join(keywords)
     md_content += "\n\n\n"
+
     for idx, paper in enumerate(results, start=1):
         other_categories = paper['all_categories']
         other_categories.remove(paper['primary_category'])
@@ -46,6 +47,10 @@ def save_as_update_html(results, start_date, end_date, authors=None, keywords=No
             md_content += ", " + ", ".join(other_categories)
         md_content += "\n\n"
         md_content += f"**Abstract:**\n\n{paper['abstract']}\n\n"
+
+    # message if no results were found
+    if not(results):
+        md_content += "\n---\n No results matched matched your filter in this date range."
 
     md_content += "---\n\n Thank you to arXiv for use of its open access interoperability.\n\n Link to its [API](https://info.arxiv.org/help/api/index.html), which this makes use of."
     # Convert Markdown to HTML

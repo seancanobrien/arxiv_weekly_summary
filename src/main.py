@@ -15,12 +15,7 @@ def make_prev_weekly_update(day, filter_loc, save_dir):
 
     # Search arXiv
     matches = search_arxiv(start_date, end_date, authors, keywords, repositories)
-
-    # Save results as HTML
-    if matches:
-        save_as_update_html(matches, start_date, end_date, authors, keywords, repositories, save_dir + f"{start_date.strftime('%Y-%m-%d')}_weekly_update.html")
-    else:
-        sys.exit("No matching results found")
+    save_as_update_html(matches, start_date, end_date, authors, keywords, repositories, save_dir + f"{start_date.strftime('%Y-%m-%d')}_weekly_update.html")
 
 # make many weekly updates retrospectively
 def make_weekly_updates_in_range(start_date, end_date, filter_loc, save_dir):

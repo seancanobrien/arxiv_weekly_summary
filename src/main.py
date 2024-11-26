@@ -20,7 +20,7 @@ def make_prev_weekly_update(day, filter_loc, save_dir):
     if matches:
         save_as_update_html(matches, start_date, end_date, authors, keywords, repositories, save_dir + f"{start_date.strftime('%Y-%m-%d')}_weekly_update.html")
     else:
-        print("No matching results found.")
+        sys.exit("No matching results found")
 
 # make many weekly updates retrospectively
 def make_weekly_updates_in_range(start_date, end_date, filter_loc, save_dir):
@@ -39,12 +39,12 @@ if __name__ == "__main__":
     if start_date == "t":
         resolved_start_date = datetime.datetime.today()
     else:
-        resolved_start_date = datetime.datetime.strptime(start_date, "%Y-%m-$d")
+        resolved_start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
 
     if end_date == "t":
         resolved_end_date = datetime.datetime.today()
     else:
-        resolved_end_date = datetime.datetime.strptime(end_date, "%Y-%m-$d")
+        resolved_end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
 
     resolved_filter_file_location = os.path.abspath(filter_file_location)
 

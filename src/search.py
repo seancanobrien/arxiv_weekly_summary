@@ -1,4 +1,5 @@
 import arxiv
+import pdb
 
 def search_arxiv(start_date, end_date, authors=None, keywords=None, repositories=None):
     """
@@ -51,8 +52,6 @@ def search_arxiv(start_date, end_date, authors=None, keywords=None, repositories
     )
     
     results = []
-    # x = client.results(search)
-    # pdb.set_trace()
     for result in client.results(search):
         results.append({
             "title": result.title,

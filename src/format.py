@@ -15,7 +15,7 @@ def save_as_update_html(results, start_date, end_date, authors=None, keywords=No
     md_content += "### Search Criteria\n"
     md_content += " - **Subject categories**: " + ", ".join(repositories)
     md_content += "\n - **Match authors**: " + ", ".join(authors)
-    md_content += "\n - **Match abstract**: " + ", ".join(keywords)
+    md_content += "\n - **Match title or abstract**: " + ", ".join(keywords)
     md_content += "\n\n\n"
 
     for idx, paper in enumerate(results, start=1):

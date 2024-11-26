@@ -46,6 +46,9 @@ def search_arxiv(start_date, end_date, authors=None, keywords=None, repositories
         if repository_query:
             query_str += ")"
         query_str += ")"
+    else:
+        exit("No filters specified, exiting")
+
     # Use arxiv.Client for querying
     client = arxiv.Client(page_size=100)  # Adjust page size as needed
     search = arxiv.Search(

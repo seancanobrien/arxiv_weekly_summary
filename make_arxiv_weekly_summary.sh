@@ -17,12 +17,14 @@ construct_summary_and_send_email() {
   fi
 
   update_html=$(/home/sean/.local/arxiv_weekly_summary/env/bin/python3 /home/sean/.local/arxiv_weekly_summary/src/main.py t t $1 $specific_email_store_dir)
-  echo "generated file $update_html"
 
-  if [[ -n $update_html ]]
+  if [[ -n $update_html && -f $update_html && -s $update_html ]]
   then
+    echo "generated file $update_html"
     mutt -e 'set content_type=text/html' -s 'Weekly Arxiv Update' $send_email < $update_html
     echo "sent email containing $update_html to $send_email"
+  else
+    echo "some error with generated file: $update_html"
   fi
 }
 
@@ -35,6 +37,8 @@ do
     echo "-------------------------------------"
     echo "collected filter file $filter_file"
     construct_summary_and_send_email "$filter_file"
+  else
+    echo "$filter_file is not a file or is empty, skipping"
   fi
 done
 

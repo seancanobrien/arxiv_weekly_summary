@@ -49,54 +49,10 @@ def save_as_update_html(results, start_date, end_date, authors=None, keywords=No
 
     md_content += "---\n\n Thank you to arXiv for use of its open access interoperability.\n\n Link to its [API](https://info.arxiv.org/help/api/index.html), which this makes use of."
     # Convert Markdown to HTML
-    html_content = markdown.markdown(md_content, extensions=['extra', 'pymdownx.arithmatex'])
-
-    # MathJax 3 script
-    mathjax_script = """
-    <script>
-    window.MathJax = {
-      options: {
-        ignoreHtmlClass: 'tex2jax_ignore',
-        processHtmlClass: 'tex2jax_process',
-        renderActions: {
-          find: [10, function (doc) {
-            for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              const sibling = node.previousElementSibling;
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-              if (sibling && sibling.matches('.MathJax_Preview')) {
-                sibling.parentNode.removeChild(sibling);
-              }
-            }
-          }, '']
-        }
-      }
-    };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-    """
-
-    full_html = f"""
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {mathjax_script}
-    </head>
-    <body>
-        {html_content}
-    </body>
-    </html>
-    """
+    html_content = markdown.markdown(md_content, extensions=['extra'])
 
     # Save to an HTML file
-    with open(output_file, "w", encoding="utf-8") as f:
+    with open(html_content, "w", encoding="utf-8") as f:
         f.write(full_html)
 
     print(output_file)

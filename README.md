@@ -36,8 +36,14 @@ This script requires packages. I don't want to learn how to package these requir
 
 ## Filter file format
 The filter file has a simple format described below.
+
 ```
-# Comment lines that are ignored
+example_filter.txt
+--------------------
+Anything before the first header (RePOSITORIES: etc) is ignored.
+We can put an email here. For use in another script.
+
+# Comment lines are ignored
 REPOSITORIES:
 math.gr
 math.at
@@ -48,6 +54,7 @@ Ruth Charney
 # Hyphens and potentially other symbols should be substituted for underscores.
 Rose Morris_Wright
 
+# These headers are case sensitive and must contain the colon
 KEYWORDS:
 artin
 coxter

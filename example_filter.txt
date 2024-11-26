@@ -1,0 +1,20 @@
+Anything before the first header (RePOSITORIES: etc) is ignored.
+We can put an email here. For use in another script.
+
+# Comment lines are ignored
+REPOSITORIES:
+math.gr
+math.at
+
+AUTHORS:
+Jon McCammond
+Ruth Charney
+# Hyphens and potentially other symbols should be substituted for underscores.
+Rose Morris_Wright
+
+# These headers are case sensitive and must contain the colon
+KEYWORDS:
+artin
+coxter
+braid
+maths is cool

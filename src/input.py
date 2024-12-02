@@ -27,11 +27,11 @@ def get_filter_vals(filename):
 
             # Add content to the appropriate section
             if current_section == "authors":
-                authors.append(line)
+                authors.append(line.strip())
             elif current_section == "keywords":
-                keywords.append(line)
+                keywords.append(line.strip())
             elif current_section == "repositories":
-                repositories.append(line)
+                repositories.append(line.strip())
 
     return authors, keywords, repositories
 

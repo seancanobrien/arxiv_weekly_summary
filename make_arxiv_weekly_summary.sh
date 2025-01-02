@@ -5,8 +5,8 @@
 # There are remote and local copies of the filter files
 # and the stored summaries. This is because using rclone directly
 # on a remote seems unreliable
-remote_dir="google_drive:arxiv_summaries_per_email"
-local_dir="/home/sean/.local/arxiv_weekly_summary/data_local_copy"
+remote_dir="google_drive:arxiv_summary"
+local_dir="/home/sean/arxiv_weekly_summary/data_local_copy"
 
 local_summary_store="$local_dir/summaries"
 
@@ -26,12 +26,12 @@ construct_summary_and_send_email() {
       echo "made directory $specific_email_store_dir"
   fi
 
-  update_html=$(/home/sean/.local/arxiv_weekly_summary/env/bin/python3 /home/sean/.local/arxiv_weekly_summary/src/main.py t t $1 $specific_email_store_dir)
+  update_html=$(~/arxiv_weekly_summary/venv/bin/python3 ~/arxiv_weekly_summary/src/main.py t t $1 $specific_email_store_dir)
 
   if [[ -n $update_html && -f $update_html && -s $update_html ]]
   then
     echo "generated file $update_html"
-    # mutt -e 'set content_type=text/html' -s 'Weekly Arxiv Update' $send_email < $update_html
+    mutt -e 'set content_type=text/html' -s 'Weekly Arxiv Update' $send_email < $update_html
     echo "sent email containing $update_html to $send_email"
   else
     echo "some error with generated file: $update_html"

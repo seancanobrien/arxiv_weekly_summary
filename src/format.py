@@ -9,11 +9,15 @@ def save_as_update_html(results, start_date, end_date, authors=None, keywords=No
     - results (list of dict): Search results with title, abstract, and URL.
     - output_file (str): Name of the output HTML file.
     """
+
+    link_formatted_repositories = [f"[{rep_cap}](https://arxiv.org/list/{rep_cap}/recent)" for rep_cap in 
+                                   [f"{rep_no_cap.split('.')[0]}.{rep_no_cap.split('.')[1].upper()}" for rep_no_cap in repositories]]
+
     # Generate Markdown content
     md_content = "# Arχiv Weekly Update\n"
     md_content += f"#### {start_date.strftime('%a')} {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%a')} {end_date.strftime('%Y-%m-%d')}\n\n"
     md_content += "### Search Criteria\n"
-    md_content += " - **Subject categories**: " + ", ".join(repositories)
+    md_content += " - **Subject categories**: " + ", ".join(link_formatted_repositories)
     md_content += "\n - **Match authors**: " + ", ".join(authors)
     md_content += "\n - **Match title or abstract**: " + ", ".join(keywords)
     md_content += "\n\n\n"

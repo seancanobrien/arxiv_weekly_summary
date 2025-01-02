@@ -1,4 +1,5 @@
 env/*
+venv/*
 src/__pycache__/*
 *.html
 data_local_copy/*

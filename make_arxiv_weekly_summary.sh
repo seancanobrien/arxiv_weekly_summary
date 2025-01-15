@@ -5,7 +5,7 @@
 # There are remote and local copies of the filter files
 # and the stored summaries. This is because using rclone directly
 # on a remote seems unreliable
-remote_dir="google_drive:arxiv_summary"
+remote_dir="google_drive_personal:arxiv_weekly_summary"
 local_dir="/home/sean/arxiv_weekly_summary/data_local_copy"
 
 local_summary_store="$local_dir/summaries"
@@ -48,12 +48,17 @@ for local_filter_file in "$local_dir/filters/"*
 do
   if [[ -f $local_filter_file && -s $local_filter_file ]]
   then
-    echo "-------------------------------------"
-    echo "collected filter file $local_filter_file"
-    # fix potential dos carriage returns
-    dos2unix $local_filter_file
-    sed -i 's/\r/\n/g' $local_filter_file
-    construct_summary_and_send_email $local_filter_file
+	  if file $local_filter_file | grep -q "text"
+	  then
+	    echo "-------------------------------------"
+	    echo "collected filter file $local_filter_file"
+	    # fix potential dos carriage returns
+	    dos2unix $local_filter_file
+	    sed -i 's/\r/\n/g' $local_filter_file
+	    construct_summary_and_send_email $local_filter_file
+	  else
+	    echo "$local_filter_file is not a plain text file, skipping"
+	  fi
   else
     echo "$local_filter_file is not a file or is empty, skipping"
   fi

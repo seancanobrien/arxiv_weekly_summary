@@ -17,9 +17,7 @@ def save_as_update_html(results, start_date, end_date, authors=None, keywords=No
     md_content = "# Arχiv Weekly Update\n"
     md_content += f"#### {start_date.strftime('%a')} {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%a')} {end_date.strftime('%Y-%m-%d')}\n\n"
     md_content += "### Search Criteria\n"
-    # removing links, to not get bounced as spam
-    # md_content += " - **Subject categories**: " + ", ".join(link_formatted_repositories)
-    md_content += " - **Subject categories**: " + ", ".join([rep.replace(".", "(dot)") for rep in repositories])
+    md_content += " - **Subject categories**: " + ", ".join(link_formatted_repositories)
     md_content += "\n - **Match authors**: " + ", ".join(authors)
     md_content += "\n - **Match title or abstract**: " + ", ".join(keywords)
     md_content += "\n\n\n"
@@ -38,9 +36,7 @@ def save_as_update_html(results, start_date, end_date, authors=None, keywords=No
             version = version_match.group(1)
 
         md_content += "\n---\n"
-        # removing links to papers, so as not to get bounced as spam
-        # md_content += f"### [{paper['title']}]({paper['url']})\n\n"
-        md_content += f"### {paper['title']}\n\n"
+        md_content += f"### [{paper['title']}]({paper['url']})\n\n"
         md_content += f"**Authors:** {', '.join(map(str, paper['authors']))}\n\n"
         if version_correctly_formatted:
             if version == '1':
@@ -60,9 +56,7 @@ def save_as_update_html(results, start_date, end_date, authors=None, keywords=No
     if not(results):
         md_content += "\n\n---\n\n No results matched matched your filter in this date range."
     
-    # removing links to not get bounced as spam
-    # md_content += "\n\n---\n\n Thank you to arXiv for use of its open access interoperability.\n\n Link to its [API](https://info.arxiv.org/help/api/index.html), which this makes use of."
-    md_content += "\n\n---\n\n Thank you to arXiv for use of its open access interoperability.\n\n"
+    md_content += "\n\n---\n\n Thank you to arXiv for use of its open access interoperability.\n\n Link to its [API](https://info.arxiv.org/help/api/index.html), which this makes use of."
     # Convert Markdown to HTML
     html_content = markdown.markdown(md_content, extensions=['extra'])
     

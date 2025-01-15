@@ -22,7 +22,7 @@ construct_summary_and_send_email() {
 
   if [[ ! -d $specific_email_store_dir ]]
   then
-      mkdir "$specific_email_store_dir"
+      mkdir -p "$specific_email_store_dir"
       echo "made directory $specific_email_store_dir"
   fi
 
@@ -38,31 +38,51 @@ construct_summary_and_send_email() {
   fi
 }
 
-echo "-------------------------------------"
-echo "syncing filters from remote"
-# now upload the local update files to remote
-# Copy over the filter files, enuring they are synchronised with remote filter files
-rclone sync "$remote_dir/filters" "$local_dir/filters"
-
-for local_filter_file in "$local_dir/filters/"*
-do
-  if [[ -f $local_filter_file && -s $local_filter_file ]]
+clean_and_process_file() {
+  local filter_file=$1
+  if [[ -f $filter_file && -s $filter_file ]]
   then
-	  if file $local_filter_file | grep -q "text"
+	  if file $filter_file | grep -q "text"
 	  then
 	    echo "-------------------------------------"
-	    echo "collected filter file $local_filter_file"
+	    echo "collected filter file $filter_file"
 	    # fix potential dos carriage returns
-	    dos2unix $local_filter_file
-	    sed -i 's/\r/\n/g' $local_filter_file
-	    construct_summary_and_send_email $local_filter_file
+	    dos2unix $filter_file
+	    sed -i 's/\r/\n/g' $filter_file
+	    construct_summary_and_send_email $filter_file
 	  else
-	    echo "$local_filter_file is not a plain text file, skipping"
+	    echo "$filter_file is not a plain text file, skipping"
 	  fi
   else
-    echo "$local_filter_file is not a file or is empty, skipping"
+    echo "$filter_file is not a file or is empty, skipping"
   fi
-done
+}
+
+process_all_files() {
+  echo "-------------------------------------"
+  echo "syncing filters from remote"
+  # now upload the local update files to remote
+  # Copy over the filter files, enuring they are synchronised with remote filter files
+  rclone sync "$remote_dir/filters" "$local_dir/filters"
+
+  for local_filter_file in "$local_dir/filters/"*
+  do
+    clean_and_process_file "$local_filter_file"
+  done
+}
+
+process_single_file() {
+  local file=$1
+  local local_copy_file="$local_dir/filters/$(basename $file)"
+  rclone copyto "$file" "$local_copy_file"
+  clean_and_process_file "$local_copy_file"
+}
+
+if [[ $# -eq 0 ]]; then
+  process_all_files
+else
+  process_single_file "$1"
+fi
 
 echo "-------------------------------------"
 echo "copying summaries to remote"

@@ -92,7 +92,7 @@ process_all_files() {
 
   for local_filter_file in "$local_dir/filters/"*
   do
-    clean_and_process_file "$local_filter_file"
+    clean_and_process_file "$local_filter_file" "t" "t"
   done
 }
 
@@ -105,12 +105,12 @@ process_single_file() {
 if [[ $# -eq 0 ]]; then
   process_all_files
 elif [[ $# -eq 1 ]]; then
-      process_single_file "$1" "t" "t"
+  process_single_file "$1" "t" "t"
 elif [[ $# -eq 3 ]]; then
-      process_single_file "$1" "$2" "$3"
+  process_single_file "$1" "$2" "$3"
 else
-      echo "Usage:"
-      echo "  make_arxiv_weekly_summary.sh filterfile"
-      echo "  make_arxiv_weekly_summary.sh filterfile YYYY-MM-DD YYYY-MM-DD"
-      exit 1
+  echo "Usage:"
+  echo "  make_arxiv_weekly_summary.sh filterfile"
+  echo "  make_arxiv_weekly_summary.sh filterfile YYYY-MM-DD YYYY-MM-DD"
+  exit 1
 fi

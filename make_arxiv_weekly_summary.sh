@@ -7,34 +7,6 @@ local_dir="/home/sean/arxiv_weekly_summary/data_local_copy"
 local_summary_store="$local_dir/summaries"
 
 construct_summary_and_send_email() {
-  # Read the first line of the supplied file
-  # This is the relavant email address
-  read -r send_email < "$1"
-
-  echo "sending update email to $send_email"
-
-  specific_email_store_dir="$local_summary_store/$send_email"
-  echo "storing update html in $specific_email_store_dir"
-
-  if [[ ! -d $specific_email_store_dir ]]
-  then
-      mkdir -p "$specific_email_store_dir"
-      echo "made directory $specific_email_store_dir"
-  fi
-
-  update_html=$(~/arxiv_weekly_summary/venv/bin/python3 ~/arxiv_weekly_summary/src/main.py t t $1 $specific_email_store_dir)
-
-  if [[ -n $update_html && -f $update_html && -s $update_html ]]
-  then
-    echo "generated file $update_html"
-    mutt -e 'set content_type=text/html' -s 'Weekly Arxiv Update' $send_email < $update_html
-    echo "sent email containing $update_html to $send_email"
-  else
-    echo "some error with generated file: $update_html"
-  fi
-}
-
-construct_summary_and_send_email() {
   local filter_file="$1"
   local start_date="$2"
   local end_date="$3"

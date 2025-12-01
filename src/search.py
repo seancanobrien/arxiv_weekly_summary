@@ -23,15 +23,15 @@ def search_arxiv(start_date, end_date, authors=None, keywords=None, repositories
 
     author_query = ""
     if authors:
-        author_query = "(" + " OR ".join([f"au:%22{author}%22" for author in authors]) + ")"
+        author_query = "(" + " OR ".join([f"au:\"{author}\"" for author in authors]) + ")"
 
     title_query = ""
     if keywords:
-        title_query = "(" + " OR ".join([f"ti:%22{keyword}%22" for keyword in keywords]) + ")"
+        title_query = "(" + " OR ".join([f"ti:\"{keyword}\"" for keyword in keywords]) + ")"
 
     abstract_query = ""
     if keywords:
-        abstract_query = "(" + " OR ".join([f"abs:%22{keyword}%22" for keyword in keywords]) + ")"
+        abstract_query = "(" + " OR ".join([f"abs:\"{keyword}\"" for keyword in keywords]) + ")"
 
     # Combine queries with AND for the date range
     # Use submittedDate for new submissions

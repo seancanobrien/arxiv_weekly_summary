@@ -2,10 +2,6 @@
 
 # Takes in a filter file with an email at the top. Makes the relevant weekly update, then sends that email the weekly update
 
-# There are remote and local copies of the filter files
-# and the stored summaries. This is because using rclone directly
-# on a remote seems unreliable
-remote_dir="google_drive_personal:arxiv_weekly_summary"
 local_dir="/home/sean/arxiv_weekly_summary/data_local_copy"
 
 local_summary_store="$local_dir/summaries"
@@ -60,10 +56,7 @@ clean_and_process_file() {
 
 process_all_files() {
   echo "-------------------------------------"
-  echo "syncing filters from remote"
-  # now upload the local update files to remote
-  # Copy over the filter files, enuring they are synchronised with remote filter files
-  rclone sync "$remote_dir/filters" "$local_dir/filters"
+  echo "cleaning and processing filter file"
 
   for local_filter_file in "$local_dir/filters/"*
   do
@@ -74,7 +67,6 @@ process_all_files() {
 process_single_file() {
   local file=$1
   local local_copy_file="$local_dir/filters/$(basename $file)"
-  rclone copyto "$file" "$local_copy_file"
   clean_and_process_file "$local_copy_file"
 }
 
@@ -83,9 +75,3 @@ if [[ $# -eq 0 ]]; then
 else
   process_single_file "$1"
 fi
-
-echo "-------------------------------------"
-echo "copying summaries to remote"
-# now upload the local update files to remote
-rclone copy $local_summary_store "$remote_dir/summaries/"
-echo "-------------------------------------"

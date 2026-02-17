@@ -1,6 +1,5 @@
 import arxiv
 import datetime
-import pdb
 from arxivql import Query as Q
 from dateutil.relativedelta import relativedelta
 

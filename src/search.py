@@ -50,8 +50,6 @@ def search_arxiv(start_date, end_date, authors=None, keywords=None, repositories
     elif not keyword_query is None:
         query &= keyword_query
 
-    print(query)
-
     # Use arxiv.Client for querying
     client = arxiv.Client(page_size=100)  # Adjust page size as needed
     search = arxiv.Search(

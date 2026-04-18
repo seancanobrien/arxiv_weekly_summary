@@ -17,4 +17,4 @@ sgmllib3k
 urllib3
 zope.interface
 arxivql
-dateutil
+python-dateutil

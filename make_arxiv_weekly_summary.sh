@@ -22,10 +22,14 @@ construct_summary_and_send_email() {
   update_html=$(
       ~/arxiv_weekly_summary/venv/bin/python3 \
       ~/arxiv_weekly_summary/src/main.py \
-      "$start_date" "$end_date" "$filter_file" "$specific_email_store_dir"
+      "$start_date" "$end_date" "$filter_file" "$specific_email_store_dir" 2>&1
   )
+  python_exit=$?
 
-  if [[ -n $update_html && -f $update_html && -s $update_html ]]; then
+  if [[ $python_exit -ne 0 ]]; then
+      echo "Python script failed (exit $python_exit):"
+      echo "$update_html"
+  elif [[ -n $update_html && -f $update_html && -s $update_html ]]; then
       mutt -e 'set content_type=text/html' \
            -s 'Weekly Arxiv Update' \
            "$send_email" < "$update_html"
